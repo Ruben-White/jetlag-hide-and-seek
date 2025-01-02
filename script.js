@@ -1,0 +1,377 @@
+// General
+document.addEventListener('DOMContentLoaded', () => {
+    // Tabs
+    initialiseTabs();
+    selectTab('players');
+
+    // Players
+    initialiseTab('players');
+    
+    // Questions
+    initialiseTab('questions');
+
+    // Curses
+    initialiseTab('curses');
+
+    // Map
+    initialiseTab('map');
+
+    // Timer
+    setInterval(updateTimes, 1000); // Update times every second
+});
+
+function initialiseTab(tabId) {
+    if (tabId === 'players') {
+        const playersContent = document.getElementById('players-content');
+        while (playersContent.firstChild) {
+            playersContent.removeChild(playersContent.firstChild);
+        }
+        initialisePlayers();
+        
+    } else if (tabId === 'questions') {
+        // Questions
+    } else if (tabId === 'curses') {
+        // Curses
+    } else if (tabId === 'map') {
+        // Map
+    }
+}
+
+// Tab functions
+function initialiseTabs() {
+    // Tabs
+    const tabs = document.querySelectorAll('[data-tab-target]');
+    const tabHeaders = document.querySelectorAll('[data-tab-header]');
+    const tabContents = document.querySelectorAll('[data-tab-content]');
+
+    // Add icons and event listeners to tabs
+    tabs.forEach(tab => {
+        // Add icon to tab
+        const icon = document.createElement('img');
+        icon.classList.add('tab-icon');
+        icon.src = `./icons/tab-${tab.dataset.tabTarget}.svg`;
+        tab.prepend(icon);
+
+        // Add event listener to tab
+        tab.addEventListener('click', () => {
+            const targetContent = document.querySelector(`#${tab.dataset.tabTarget}-content[data-tab-content]`);
+            const targetHeader = document.querySelector(`#${tab.dataset.tabTarget}-header[data-tab-header]`);
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                tab.querySelector('.tab-icon').src = `./icons/tab-${tab.dataset.tabTarget}.svg`;
+            });
+            tabContents.forEach(tabContent => {
+                tabContent.classList.remove('active');
+                tabContent.style.display = 'none'; // Hide content
+            });
+            tabHeaders.forEach(tabHeader => {
+                tabHeader.classList.remove('active');
+                tabHeader.style.display = 'none'; // Hide header
+            });
+            tab.classList.add('active');
+            tab.querySelector('.tab-icon').src = `./icons/tab-${tab.dataset.tabTarget}-selected.svg`;
+            targetContent.classList.add('active');
+            targetContent.style.display = 'flex'; // Show content
+            targetHeader.classList.add('active');
+            targetHeader.style.display = 'flex'; // Show header
+        });
+    });
+
+    // Add headers and icons to tab headers
+    tabHeaders.forEach(header => {
+        const h1 = document.createElement('h1');
+        h1.textContent = header.id.replace('-header', '');
+        header.appendChild(h1);        
+        
+        const icon = document.createElement('img');
+        icon.classList.add('tab-icon');
+        icon.src = `./icons/tab-${header.id.replace('-header', '')}-selected.svg`;
+
+        const headerContent = document.createElement('div');
+        headerContent.classList.add('header-content');
+        headerContent.appendChild(icon);
+        while (header.firstChild) {
+            headerContent.appendChild(header.firstChild);
+        }
+
+        const resetButton = document.createElement('button');
+        resetButton.classList.add('reset-button');
+        const resetIcon = document.createElement('img');
+        resetIcon.src = './icons/tab-reset.svg';
+        resetIcon.alt = 'reset icon';
+        resetButton.appendChild(resetIcon);
+        resetButton.addEventListener('click', () => {
+            showResetPopup();
+        });
+
+        headerContent.appendChild(resetButton);
+        header.appendChild(headerContent);
+    });
+}
+
+function showResetPopup() {
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    document.body.appendChild(overlay);
+
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+
+    const popupContent = document.createElement('div');
+    popupContent.classList.add('popup-content');
+
+    const popupHeader = document.createElement('h2');
+    popupHeader.textContent = 'Reset Tab';
+    popupContent.appendChild(popupHeader);
+
+    const popupText = document.createElement('p');
+    const activeTab = document.querySelector('.active[data-tab-content]');
+    const tabName = activeTab ? activeTab.id.replace('-content', '') : 'current';
+    const capitalisedTabName = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+    popupText.innerHTML = 'Are you sure you want to reset the <strong>' + capitalisedTabName + '</strong> tab?';
+    popupContent.appendChild(popupText);
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+
+    const yesButton = document.createElement('button');
+    yesButton.textContent = 'Reset';
+    buttonContainer.appendChild(yesButton);
+
+    const noButton = document.createElement('button');
+    noButton.textContent = 'Close';
+    buttonContainer.appendChild(noButton);
+
+    popupContent.appendChild(buttonContainer);
+    popup.appendChild(popupContent);
+    document.body.appendChild(popup);
+
+    yesButton.addEventListener('click', () => {
+        const activeTab = document.querySelector('.tab.active');
+        if (activeTab) {
+            const tabId = activeTab.dataset.tabTarget;
+            initialiseTab(tabId);
+        }
+        document.body.removeChild(popup);
+        document.body.removeChild(overlay);
+    });
+
+    noButton.addEventListener('click', () => {
+        document.body.removeChild(popup);
+        document.body.removeChild(overlay);
+    });
+}
+
+function selectTab(tabId) {
+    const tab = document.querySelector(`[data-tab-target="${tabId}"]`);
+    tab.click();
+}
+
+// Player functions
+function initialisePlayers() {
+    // Initialise hiders
+    const hiders = document.createElement('div');
+    hiders.id = 'hiders';
+    const hidersHeader = document.createElement('h2');
+    hidersHeader.textContent = 'Hiders';
+    hiders.appendChild(hidersHeader);
+    const hidersList = document.createElement('ul');
+    hidersList.id = 'hiders-list'; // Add ID
+    hiders.appendChild(hidersList);
+
+    // Initialise seekers
+    const seekers = document.createElement('div');
+    seekers.id = 'seekers';
+    const seekersHeader = document.createElement('h2');
+    seekersHeader.textContent = 'Seekers';
+    seekers.appendChild(seekersHeader);
+    const seekersList = document.createElement('ul');
+    seekersList.id = 'seekers-list'; // Add ID
+    seekers.appendChild(seekersList);
+
+    // Append hiders and seekers to players-content tab
+    const playersContent = document.getElementById('players-content');
+    playersContent.appendChild(hiders);
+    playersContent.appendChild(seekers);
+
+    fetch('./assets/players.json')
+        .then(response => response.json())
+        .then(players => {
+            players.forEach(player => {
+                const playerElement = document.createElement('li');
+                playerElement.classList.add('player');
+                playerElement.style.backgroundColor = player.color;
+                playerElement.dataset.time = '0';
+
+                const playerLeft = document.createElement('div');
+                playerLeft.classList.add('player-left');
+
+                const playerRight = document.createElement('div');
+                playerRight.classList.add('player-right');
+
+                const playerIcon = document.createElement('img');
+                playerIcon.src = `./icons/${player.icon}`;
+                playerIcon.alt = 'player icon';
+                playerIcon.classList.add('player-icon');
+
+                const playerName = document.createElement('span');
+                playerName.classList.add('player-name');
+                playerName.textContent = player.name;
+
+                const playerTime = document.createElement('span');
+                playerTime.classList.add('time');
+                playerTime.textContent = '0:00:00';
+
+                const addTimeButton = document.createElement('button');
+                addTimeButton.classList.add('add-time-button');
+                
+                const addTimeIcon = document.createElement('img');
+                addTimeIcon.src = './icons/add-time.svg';
+                addTimeIcon.alt = 'add time icon';
+                addTimeButton.appendChild(addTimeIcon);
+                
+                addTimeButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    showAddTimePopup(playerElement);
+                });
+
+                playerLeft.appendChild(playerIcon);
+                playerLeft.appendChild(playerName);
+
+                playerRight.appendChild(playerTime);
+                playerRight.appendChild(addTimeButton);
+
+                playerElement.appendChild(playerLeft);
+                playerElement.appendChild(playerRight);
+
+                seekersList.appendChild(playerElement);
+            });
+
+            document.querySelectorAll('.player').forEach(player => {
+                player.addEventListener('click', () => {
+                    if (player.parentElement.parentElement.id === 'hiders') {
+                        seekersList.appendChild(player);
+                    } else {
+                        hidersList.appendChild(player);
+                    }
+                    sortPlayers();
+                });
+            });
+            sortPlayers();
+        });
+}
+
+function sortPlayers() {
+    const hiders = document.getElementById('hiders').querySelector('ul');
+    const seekers = document.getElementById('seekers').querySelector('ul');
+    const hidersArray = Array.from(hiders.children);
+    const seekersArray = Array.from(seekers.children);
+
+    hidersArray.sort((a, b) => {
+        const timeDiff = parseInt(b.dataset.time) - parseInt(a.dataset.time);
+        if (timeDiff !== 0) return timeDiff;
+        return a.querySelector('.player-name').textContent.localeCompare(b.querySelector('.player-name').textContent);
+    });
+
+    seekersArray.sort((a, b) => {
+        const timeDiff = parseInt(b.dataset.time) - parseInt(a.dataset.time);
+        if (timeDiff !== 0) return timeDiff;
+        return a.querySelector('.player-name').textContent.localeCompare(b.querySelector('.player-name').textContent);
+    });
+
+    const hidersFragment = document.createDocumentFragment();
+    const seekersFragment = document.createDocumentFragment();
+
+    hidersArray.forEach(player => {
+        hidersFragment.appendChild(player);
+    });
+
+    seekersArray.forEach(player => {
+        seekersFragment.appendChild(player);
+    });
+
+    hiders.appendChild(hidersFragment);
+    seekers.appendChild(seekersFragment);
+}
+
+function updateTimes() {
+    document.querySelectorAll('#hiders .player').forEach(player => {
+        let time = parseInt(player.dataset.time);
+        time++;
+        player.dataset.time = time;
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const seconds = time % 60;
+        player.querySelector('.time').textContent = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    });
+}
+
+function addTime(playerElement, seconds) {
+    let time = parseInt(playerElement.dataset.time);
+    time = Math.max(0, time + seconds); // Ensure time is always >= 0
+    playerElement.dataset.time = time;
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const secondsLeft = time % 60;
+    playerElement.querySelector('.time').textContent = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${secondsLeft < 10 ? '0' : ''}${secondsLeft}`;
+    sortPlayers();
+}
+
+function showAddTimePopup(playerElement) {
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    document.body.appendChild(overlay);
+
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+
+    const popupContent = document.createElement('div');
+    popupContent.classList.add('popup-content');
+
+    const popupHeader = document.createElement('h2');
+    popupHeader.textContent = 'Add Time';
+    popupContent.appendChild(popupHeader);
+
+    const popupText = document.createElement('p');
+    const playerName = playerElement.querySelector('.player-name').textContent;
+    let capitalisedName = playerName.charAt(0).toUpperCase() + playerName.slice(1);
+    capitalisedName = capitalisedName + (capitalisedName.endsWith('s') ? "'" : "'s");
+    popupText.innerHTML = "Adjust <strong>" + capitalisedName + "</strong> time by adding or subtracting seconds."
+    popupContent.appendChild(popupText);
+
+    const timeInput = document.createElement('input');
+    timeInput.type = 'number';
+    timeInput.min = '0';
+    popupContent.appendChild(timeInput);
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Apply';
+    addButton.addEventListener('click', () => {
+        const seconds = parseInt(timeInput.value);
+        if (!isNaN(seconds)) {
+            addTime(playerElement, seconds);
+            document.body.removeChild(popup);
+            document.body.removeChild(overlay);
+        }
+    });
+    buttonContainer.appendChild(addButton);
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.addEventListener('click', () => {
+        document.body.removeChild(popup);
+        document.body.removeChild(overlay);
+    });
+    buttonContainer.appendChild(closeButton);
+
+    popupContent.appendChild(buttonContainer);
+    popup.appendChild(popupContent);
+    document.body.appendChild(popup);
+}
+
+// Question functions
+
+// Curse functions
