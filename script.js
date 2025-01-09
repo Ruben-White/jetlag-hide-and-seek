@@ -1,24 +1,55 @@
 // General
 document.addEventListener('DOMContentLoaded', () => {
-    // Tabs
-    initialiseTabs();
-    selectTab('players');
+    showSplashScreen(); // Show splash screen on load
 
-    // Players
-    initialiseTab('players');
-    
-    // Questions
-    initialiseTab('questions');
+    setTimeout(() => {
+        hideSplashScreen(); // Hide splash screen after 2 seconds
 
-    // Curses
-    initialiseTab('curses');
+        // Tabs
+        initialiseTabs();
+        selectTab('players');
 
-    // Map
-    initialiseTab('map');
+        // Players
+        initialiseTab('players');
+        
+        // Questions
+        initialiseTab('questions');
 
-    // Timer
-    setInterval(updateTimes, 1000); // Update times every second
+        // Curses
+        initialiseTab('curses');
+
+        // Map
+        initialiseTab('map');
+
+        // Timer
+        setInterval(updateTimes, 1000); // Update times every second
+    }, 1000);
 });
+
+function showSplashScreen() {
+    const splashScreen = document.createElement('div');
+    splashScreen.id = 'splash-screen';
+    const splashImage = document.createElement('img');
+    splashImage.src = './icons/jetlag.png';
+    splashImage.alt = 'Jetlag';
+    splashScreen.appendChild(splashImage);
+
+    const splashText = document.createElement('h1');
+    splashText.innerHTML = 'Hide<span style="color: red;">+</span>Seek';
+    splashScreen.appendChild(splashText);
+    document.body.appendChild(splashScreen);
+}
+
+function hideSplashScreen() {
+    const splashScreen = document.getElementById('splash-screen');
+    if (splashScreen) {
+        splashScreen.style.transition = 'opacity 1s';
+        splashScreen.style.opacity = '0';
+        setTimeout(() => {
+            document.body.removeChild(splashScreen);
+        }, 1000);
+    }
+}
 
 function initialiseTab(tabId) {
     if (tabId === 'players') {
@@ -109,57 +140,103 @@ function initialiseTabs() {
     });
 }
 
-function showResetPopup() {
+function createPopup(headerText, bodyContent, buttons) {
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
     document.body.appendChild(overlay);
 
     const popup = document.createElement('div');
-    popup.classList.add('popup');
+    popup.classList.add('popup', 'popup-common');
 
     const popupContent = document.createElement('div');
     popupContent.classList.add('popup-content');
 
     const popupHeader = document.createElement('h2');
-    popupHeader.textContent = 'Reset Tab';
+    popupHeader.textContent = headerText;
     popupContent.appendChild(popupHeader);
 
     const popupText = document.createElement('p');
-    const activeTab = document.querySelector('.active[data-tab-content]');
-    const tabName = activeTab ? activeTab.id.replace('-content', '') : 'current';
-    const capitalisedTabName = tabName.charAt(0).toUpperCase() + tabName.slice(1);
-    popupText.innerHTML = 'Are you sure you want to reset the <strong>' + capitalisedTabName + '</strong> tab?';
+    popupText.innerHTML = bodyContent;
     popupContent.appendChild(popupText);
 
     const buttonContainer = document.createElement('div');
     buttonContainer.classList.add('button-container');
 
-    const yesButton = document.createElement('button');
-    yesButton.textContent = 'Reset';
-    buttonContainer.appendChild(yesButton);
-
-    const noButton = document.createElement('button');
-    noButton.textContent = 'Close';
-    buttonContainer.appendChild(noButton);
+    buttons.forEach(button => {
+        const btn = document.createElement('button');
+        btn.textContent = button.text;
+        btn.addEventListener('click', button.onClick);
+        buttonContainer.appendChild(btn);
+    });
 
     popupContent.appendChild(buttonContainer);
     popup.appendChild(popupContent);
     document.body.appendChild(popup);
 
-    yesButton.addEventListener('click', () => {
-        const activeTab = document.querySelector('.tab.active');
-        if (activeTab) {
-            const tabId = activeTab.dataset.tabTarget;
-            initialiseTab(tabId);
-        }
-        document.body.removeChild(popup);
-        document.body.removeChild(overlay);
-    });
+    return { popup, overlay };
+}
 
-    noButton.addEventListener('click', () => {
-        document.body.removeChild(popup);
-        document.body.removeChild(overlay);
-    });
+function showResetPopup() {
+    const activeTab = document.querySelector('.active[data-tab-content]');
+    const tabName = activeTab ? activeTab.id.replace('-content', '') : 'current';
+    const capitalisedTabName = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+    const bodyContent = 'Are you sure you want to reset the <strong>' + capitalisedTabName + '</strong> tab?';
+
+    const { popup, overlay } = createPopup('Reset Tab', bodyContent, [
+        {
+            text: 'Reset',
+            onClick: () => {
+                const activeTab = document.querySelector('.tab.active');
+                if (activeTab) {
+                    const tabId = activeTab.dataset.tabTarget;
+                    initialiseTab(tabId);
+                }
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            }
+        },
+        {
+            text: 'Close',
+            onClick: () => {
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            }
+        }
+    ]);
+}
+
+function showAddTimePopup(playerElement) {
+    const playerName = playerElement.querySelector('.player-name').textContent;
+    let capitalisedName = playerName.charAt(0).toUpperCase() + playerName.slice(1);
+    capitalisedName = capitalisedName + (capitalisedName.endsWith('s') ? "'" : "'s");
+    const bodyContent = "Adjust <strong>" + capitalisedName + "</strong> time by adding or subtracting seconds.";
+
+    const { popup, overlay } = createPopup('Add Time', bodyContent, [
+        {
+            text: 'Apply',
+            onClick: () => {
+                const timeInput = popup.querySelector('input[type="number"]');
+                const seconds = parseInt(timeInput.value);
+                if (!isNaN(seconds)) {
+                    addTime(playerElement, seconds);
+                    document.body.removeChild(popup);
+                    document.body.removeChild(overlay);
+                }
+            }
+        },
+        {
+            text: 'Close',
+            onClick: () => {
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            }
+        }
+    ]);
+
+    const timeInput = document.createElement('input');
+    timeInput.type = 'number';
+    timeInput.min = '0';
+    popup.querySelector('.popup-content').insertBefore(timeInput, popup.querySelector('.button-container'));
 }
 
 function selectTab(tabId) {
@@ -315,61 +392,6 @@ function addTime(playerElement, seconds) {
     const secondsLeft = time % 60;
     playerElement.querySelector('.time').textContent = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${secondsLeft < 10 ? '0' : ''}${secondsLeft}`;
     sortPlayers();
-}
-
-function showAddTimePopup(playerElement) {
-    const overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-    document.body.appendChild(overlay);
-
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-
-    const popupContent = document.createElement('div');
-    popupContent.classList.add('popup-content');
-
-    const popupHeader = document.createElement('h2');
-    popupHeader.textContent = 'Add Time';
-    popupContent.appendChild(popupHeader);
-
-    const popupText = document.createElement('p');
-    const playerName = playerElement.querySelector('.player-name').textContent;
-    let capitalisedName = playerName.charAt(0).toUpperCase() + playerName.slice(1);
-    capitalisedName = capitalisedName + (capitalisedName.endsWith('s') ? "'" : "'s");
-    popupText.innerHTML = "Adjust <strong>" + capitalisedName + "</strong> time by adding or subtracting seconds."
-    popupContent.appendChild(popupText);
-
-    const timeInput = document.createElement('input');
-    timeInput.type = 'number';
-    timeInput.min = '0';
-    popupContent.appendChild(timeInput);
-
-    const buttonContainer = document.createElement('div');
-    buttonContainer.classList.add('button-container');
-
-    const addButton = document.createElement('button');
-    addButton.textContent = 'Apply';
-    addButton.addEventListener('click', () => {
-        const seconds = parseInt(timeInput.value);
-        if (!isNaN(seconds)) {
-            addTime(playerElement, seconds);
-            document.body.removeChild(popup);
-            document.body.removeChild(overlay);
-        }
-    });
-    buttonContainer.appendChild(addButton);
-
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.addEventListener('click', () => {
-        document.body.removeChild(popup);
-        document.body.removeChild(overlay);
-    });
-    buttonContainer.appendChild(closeButton);
-
-    popupContent.appendChild(buttonContainer);
-    popup.appendChild(popupContent);
-    document.body.appendChild(popup);
 }
 
 // Question functions
