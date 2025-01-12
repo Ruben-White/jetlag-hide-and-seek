@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Timer
         setInterval(updateTimes, 1000); // Update times every second
-    }, 0);
+    }, 1000);
 });
 
 function showSplashScreen() {
@@ -541,8 +541,9 @@ function initialiseCurses() {
 
 function showDrawCursesPopup() {
     const cursesGrid = document.querySelector('.curses-grid');
-    if (cursesGrid.children.length > 6) {
-        const bodyContent = 'You have more than 6 curses. Please discard down to 6 cards before drawing more.';
+    const MAX_CURSES = 6;
+    if (cursesGrid.children.length > MAX_CURSES) {
+        const bodyContent = `You have more than ${MAX_CURSES} curses. Please discard down to ${MAX_CURSES} cards before drawing more.`;
         const { popup, overlay } = createPopup('Too Many Curses', bodyContent, [
             {
                 text: 'Close',
