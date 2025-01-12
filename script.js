@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Timer
         setInterval(updateTimes, 1000); // Update times every second
-    }, 1000);
+    }, 0);
 });
 
 function showSplashScreen() {
@@ -60,9 +60,9 @@ function initialiseTab(tabId) {
         initialisePlayers();
         
     } else if (tabId === 'questions') {
-        // Questions
+        initialiseQuestions();
     } else if (tabId === 'curses') {
-        // Curses
+        initialiseCurses();
     } else if (tabId === 'map') {
         // Map
     }
@@ -186,13 +186,17 @@ function showResetPopup() {
         {
             text: 'Reset',
             onClick: () => {
-                const activeTab = document.querySelector('.tab.active');
-                if (activeTab) {
-                    const tabId = activeTab.dataset.tabTarget;
-                    initialiseTab(tabId);
-                }
-                document.body.removeChild(popup);
-                document.body.removeChild(overlay);
+                showSplashScreen(); // Show splash screen briefly
+                setTimeout(() => {
+                    const activeTab = document.querySelector('.tab.active');
+                    if (activeTab) {
+                        const tabId = activeTab.dataset.tabTarget;
+                        initialiseTab(tabId);
+                    }
+                    hideSplashScreen(); // Hide splash screen after resetting
+                    document.body.removeChild(popup);
+                    document.body.removeChild(overlay);
+                }, 500); // Adjust the timeout duration as needed
             }
         },
         {
@@ -236,6 +240,7 @@ function showAddTimePopup(playerElement) {
     const timeInput = document.createElement('input');
     timeInput.type = 'number';
     timeInput.min = '0';
+    timeInput.placeholder = 'Number of seconds';
     popup.querySelector('.popup-content').insertBefore(timeInput, popup.querySelector('.button-container'));
 }
 
@@ -244,13 +249,21 @@ function selectTab(tabId) {
     tab.click();
 }
 
-// Player functions
+// Players functions
 function initialisePlayers() {
     // Initialise hiders
     const hiders = document.createElement('div');
     hiders.id = 'hiders';
     const hidersHeader = document.createElement('h2');
-    hidersHeader.textContent = 'Hiders';
+    
+    // Add icon to hiders header
+    const hidersIcon = document.createElement('img');
+    hidersIcon.src = './icons/players-hiders.svg';
+    hidersIcon.alt = 'Hiders icon';
+    hidersIcon.classList.add('header-icon');
+    hidersHeader.appendChild(hidersIcon);
+    
+    hidersHeader.appendChild(document.createTextNode('Hiders'));
     hiders.appendChild(hidersHeader);
     const hidersList = document.createElement('ul');
     hidersList.id = 'hiders-list'; // Add ID
@@ -260,7 +273,15 @@ function initialisePlayers() {
     const seekers = document.createElement('div');
     seekers.id = 'seekers';
     const seekersHeader = document.createElement('h2');
-    seekersHeader.textContent = 'Seekers';
+    
+    // Add icon to seekers header
+    const seekersIcon = document.createElement('img');
+    seekersIcon.src = './icons/players-seekers.svg';
+    seekersIcon.alt = 'Seekers icon';
+    seekersIcon.classList.add('header-icon');
+    seekersHeader.appendChild(seekersIcon);
+    
+    seekersHeader.appendChild(document.createTextNode('Seekers'));
     seekers.appendChild(seekersHeader);
     const seekersList = document.createElement('ul');
     seekersList.id = 'seekers-list'; // Add ID
@@ -303,7 +324,7 @@ function initialisePlayers() {
                 addTimeButton.classList.add('add-time-button');
                 
                 const addTimeIcon = document.createElement('img');
-                addTimeIcon.src = './icons/add-time.svg';
+                addTimeIcon.src = './icons/players-add-time.svg';
                 addTimeIcon.alt = 'add time icon';
                 addTimeButton.appendChild(addTimeIcon);
                 
@@ -394,6 +415,228 @@ function addTime(playerElement, seconds) {
     sortPlayers();
 }
 
-// Question functions
+// Questions functions
+function initialiseQuestions() {
+    const questionsContent = document.getElementById('questions-content');
+    while (questionsContent.firstChild) {
+        questionsContent.removeChild(questionsContent.firstChild);
+    }
 
-// Curse functions
+    fetch('./assets/questions.json')
+        .then(response => response.json())
+        .then(categories => {
+            categories.forEach(category => {
+                const categoryElement = document.createElement('div');
+                categoryElement.classList.add('question-category');
+
+                const categoryIcon = document.createElement('img');
+                categoryIcon.src = `./icons/${category.icon}`;
+                categoryIcon.alt = `${category.name} icon`;
+
+                const categoryHeader = document.createElement('h2');
+                categoryHeader.textContent = category.name;
+
+                const categoryCost = document.createElement('span');
+                categoryCost.classList.add('question-cost');
+                categoryCost.textContent = category.cost;
+
+                categoryElement.appendChild(categoryIcon);
+                categoryElement.appendChild(categoryHeader);
+                categoryElement.appendChild(categoryCost);
+                questionsContent.appendChild(categoryElement);
+
+                const questionsGrid = document.createElement('div');
+                questionsGrid.classList.add('questions-grid');
+
+                category.questions.forEach(question => {
+                    const questionBlock = document.createElement('div');
+                    questionBlock.classList.add('question-block');
+                    questionBlock.style.backgroundColor = category.color;
+                    questionBlock.dataset.asked = 'false'; // Add asked attribute
+
+                    const questionIcon = document.createElement('img');
+                    questionIcon.src = `./icons/${question.icon}`;
+                    questionIcon.alt = `${question.name} icon`;
+
+                    questionBlock.appendChild(questionIcon);
+                    questionsGrid.appendChild(questionBlock);
+
+                    questionBlock.addEventListener('click', () => {
+                        if (questionBlock.dataset.asked === 'false') {
+                            showQuestionPopup(question.name, question.description, questionBlock, category.cost);
+                        }
+                    });
+                });
+
+                questionsContent.appendChild(questionsGrid);
+            });
+        });
+}
+
+function showQuestionPopup(name, description, questionBlock, cost) {
+    const bodyContent = `<p>${description}</p><p><strong>Asking Cost: ${cost}.</p></strong>`;
+    const { popup, overlay } = createPopup(name, bodyContent, [
+        {
+            text: 'Ask',
+            onClick: () => {
+                // Copy question name, description and cost to clipboard
+                const clipboardContent = `*${name}*\n${description}\n\n Asking Cost: ${cost}. \n Coordinates: [latitude, longitude].`;
+
+                navigator.clipboard.writeText(clipboardContent).then(() => {
+                    questionBlock.dataset.asked = 'true'; // Mark question as asked
+                    questionBlock.style.opacity = '0.5'; // Dim the question block
+                    document.body.removeChild(popup);
+                    document.body.removeChild(overlay);
+                });
+            }
+        },
+        {
+            text: 'Close',
+            onClick: () => {
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            }
+        }
+    ]);
+}
+
+// Curses functions
+function initialiseCurses() {
+    const cursesContent = document.getElementById('curses-content');
+    while (cursesContent.firstChild) {
+        cursesContent.removeChild(cursesContent.firstChild);
+    }
+
+    const handSection = document.createElement('div');
+    handSection.classList.add('hand-section');
+
+    const handHeader = document.createElement('h2');
+    
+    // Add icon to hand header
+    const handIcon = document.createElement('img');
+    handIcon.src = './icons/curse-castable-curses.svg';
+    handIcon.alt = 'Curses icon';
+    handIcon.classList.add('header-icon');
+    handHeader.appendChild(handIcon);
+    
+    handHeader.appendChild(document.createTextNode('Castable Curses'));
+
+    const drawButton = document.createElement('button');
+    drawButton.classList.add('draw-curses-button');
+    const drawIcon = document.createElement('img');
+    drawIcon.src = './icons/curse-draw-curses.svg';
+    drawIcon.alt = 'draw curses icon';
+    drawButton.appendChild(drawIcon);
+    drawButton.addEventListener('click', showDrawCursesPopup);
+
+    handSection.appendChild(handHeader);
+    handSection.appendChild(drawButton);
+
+    const cursesGrid = document.createElement('div');
+    cursesGrid.classList.add('curses-grid');
+
+    cursesContent.appendChild(handSection);
+    cursesContent.appendChild(cursesGrid);
+}
+
+function showDrawCursesPopup() {
+    const cursesGrid = document.querySelector('.curses-grid');
+    if (cursesGrid.children.length > 6) {
+        const bodyContent = 'You have more than 6 curses. Please discard down to 6 cards before drawing more.';
+        const { popup, overlay } = createPopup('Too Many Curses', bodyContent, [
+            {
+                text: 'Close',
+                onClick: () => {
+                    document.body.removeChild(popup);
+                    document.body.removeChild(overlay);
+                }
+            }
+        ]);
+        return;
+    }
+
+    const bodyContent = 'Enter the number of curses to draw:';
+    const { popup, overlay } = createPopup('Draw Curses', bodyContent, [
+        {
+            text: 'Draw',
+            onClick: () => {
+                const cursesInput = popup.querySelector('input[type="number"]');
+                const count = parseInt(cursesInput.value);
+                if (!isNaN(count) && count > 0) {
+                    drawCurses(count, popup, overlay);
+                }
+            }
+        },
+        {
+            text: 'Close',
+            onClick: () => {
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            }
+        }
+    ]);
+
+    const cursesInput = document.createElement('input');
+    cursesInput.type = 'number';
+    cursesInput.min = '1';
+    cursesInput.placeholder = 'Number of curses';
+    popup.querySelector('.popup-content').insertBefore(cursesInput, popup.querySelector('.button-container'));
+}
+
+function drawCurses(count, popup, overlay) {
+    const cursesGrid = document.querySelector('.curses-grid');
+    fetch('./assets/cursers.json')
+        .then(response => response.json())
+        .then(curses => {
+            for (let i = 0; i < count; i++) {
+                const randomIndex = Math.floor(Math.random() * curses.length);
+                const curse = curses.splice(randomIndex, 1)[0];
+
+                const curseElement = document.createElement('div');
+                curseElement.classList.add('curse');
+                curseElement.dataset.name = curse.name;
+                curseElement.dataset.description = curse.description;
+                curseElement.dataset.cost = curse.cost;
+
+                const curseName = document.createElement('span');
+                curseName.classList.add('curse-name');
+                curseName.textContent = curse.name;
+
+                curseElement.appendChild(curseName);
+                cursesGrid.appendChild(curseElement);
+
+                curseElement.addEventListener('click', () => {
+                    showCursePopup(curseElement);
+                });
+            }
+            document.body.removeChild(popup);
+            document.body.removeChild(overlay);
+        });
+}
+
+function showCursePopup(curseElement) {
+    const name = curseElement.dataset.name;
+    const description = curseElement.dataset.description;
+    const cost = curseElement.dataset.cost;
+    const bodyContent = `<p>${description}</p><p><strong>${cost}</strong></p>`;
+    const { popup, overlay } = createPopup(name, bodyContent, [
+        {
+            text: 'Cast',
+            onClick: () => {
+                const clipboardContent = `*${name}*\n${description}\n\n Casting Cost: ${cost}.`;
+                navigator.clipboard.writeText(clipboardContent).then(() => {
+                    curseElement.remove();
+                    document.body.removeChild(popup);
+                    document.body.removeChild(overlay);
+                });
+            }
+        },
+        {
+            text: 'Close',
+            onClick: () => {
+                document.body.removeChild(popup);
+                document.body.removeChild(overlay);
+            }
+        }
+    ]);
+}

@@ -5,7 +5,7 @@
 
 body {
   margin: 0;
-  padding: 50px 0 50px 0; /* Adjust padding to account for header and tabs */
+  padding: 50px 0 50px 0;
   display: flex;
   flex-direction: column;
   font-family: 'Rubik', sans-serif;
@@ -79,13 +79,13 @@ h1, h2, h3, h4, h5, h6 {
 /* Tab Content */
 [data-tab-content] {
   display: none;
-  flex: 1; /* Ensure tab content takes available space */
+  flex: 1;
 }
 
 .active[data-tab-content] {
   display: flex;
   flex-direction: column;
-  flex: 1; /* Ensure tab content takes available space */
+  flex: 1;
 }
 
 .reset-button {
@@ -116,6 +116,12 @@ h1, h2, h3, h4, h5, h6 {
 #hiders ul, #seekers ul {
   padding: 0;
   margin: 0;
+}
+
+#hiders h2 img, #seekers h2 img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
 
 .player {
@@ -167,6 +173,129 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ====================================================================================================*/
+/* Questions */
+#questions-content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.question-category {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.question-category img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.question-cost {
+  margin-left: auto;
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.question-block {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+}
+
+.question-block img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 0;
+}
+
+/* ====================================================================================================*/
+/* Curses */
+#curses-content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.curse-category {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.curse-category img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.hand-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hand-section img {
+  width: 20px;
+  height: 20px; 
+  margin-right: 10px;
+}
+
+.draw-curses-button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+}
+
+.draw-curses-button img {
+  width: 100%;
+  height: 100%;
+}
+
+.curses-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.curse {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  background-color: #aaa;
+}
+
+.curse-name {
+  margin-top: 10px;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase; /* Make curse names uppercase */
+}
+
+/* ====================================================================================================*/
 /* Pop-up */
 .popup-common {
   position: fixed;
@@ -191,7 +320,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .popup-content p {
   text-align: center;
-  margin: 0;
+  margin: 5px 0;
 }
 
 .popup-content input {
@@ -225,6 +354,11 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 
+.popup-content h2 {
+  text-align: center;
+  width: 100%;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -236,6 +370,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ====================================================================================================*/
+/* Splash Screen */
 #splash-screen {
   position: fixed;
   top: 0;
@@ -249,7 +384,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   align-items: center;
   opacity: 1;
-  transition: opacity 0.5s ease-in;
+  transition: opacity 0.5s ease-in-out;
 }
 
 #splash-screen img {
