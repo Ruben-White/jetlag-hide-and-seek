@@ -1,6 +1,8 @@
 [
-    { "name": "Ruben", "icon": "players-player.svg", "color": "#5665EB" },
-    { "name": "Kees", "icon": "players-player.svg", "color": "#4FB26D" },
-    { "name": "Jasper", "icon": "players-player.svg", "color": "#D63333" },
-    { "name": "Jelle", "icon": "players-player.svg", "color": "#E47A3E" }
+    {"name": "Ruben", "icon": "players-player.svg", "color": "#28A3D9"},
+    {"name": "Kees", "icon": "players-player.svg", "color": "#8C4FB0"},
+    {"name": "Bjorn", "icon": "players-player.svg", "color": "#1DA44D"},
+    {"name": "Kelt", "icon": "players-player.svg", "color": "#FFBD41"},
+    {"name": "Simon", "icon": "players-player.svg", "color": "#F5793B"},
+    {"name": "Tom", "icon": "players-player.svg", "color": "#EC3339"}
 ]

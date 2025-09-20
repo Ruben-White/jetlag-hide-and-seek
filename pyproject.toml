@@ -1,0 +1,15 @@
+[project]
+name = "jetlag-private"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "contextily>=1.6.2",
+    "folium>=0.20.0",
+    "geopandas>=1.1.1",
+    "ipykernel>=6.30.1",
+    "mapclassify>=2.10.0",
+    "matplotlib>=3.10.6",
+    "osmnx>=2.0.6",
+]

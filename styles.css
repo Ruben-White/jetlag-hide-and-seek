@@ -15,18 +15,25 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 600%; /* Scaled x2 */
+  font-size: 600%;
+  /* Scaled x2 */
 }
 
 p {
   margin: 0;
   padding: 0;
-  font-size: 250%; /* Scaled x2 */
+  font-size: 250%;
+  /* Scaled x2 */
 }
 
 /* ====================================================================================================*/
@@ -43,7 +50,8 @@ p {
 
 .tab {
   cursor: pointer;
-  padding: 20px; /* Scaled x2 */
+  padding: 20px;
+  /* Scaled x2 */
   flex: 1 1;
   display: flex;
   flex-direction: column;
@@ -55,8 +63,10 @@ p {
 }
 
 .tab img {
-  width: 120px; /* Scaled x2 */
-  height: 120px; /* Scaled x2 */
+  width: 120px;
+  /* Scaled x2 */
+  height: 120px;
+  /* Scaled x2 */
 }
 
 /* Tab Header */
@@ -75,9 +85,12 @@ p {
 }
 
 .tab-header img {
-  width: 120px; /* Scaled x2 */
-  height: 120px; /* Scaled x2 */
-  margin: 0px 20px; /* Scaled x2 */
+  width: 120px;
+  /* Scaled x2 */
+  height: 120px;
+  /* Scaled x2 */
+  margin: 0px 20px;
+  /* Scaled x2 */
 }
 
 [data-tab-header] {
@@ -90,7 +103,8 @@ p {
 
 /* Tab Content */
 [data-tab-content] {
-  margin: 120px 0px 160px 0px; /* Scaled x2 */
+  margin: 120px 0px 160px 0px;
+  /* Scaled x2 */
   display: none;
   flex: 1;
 }
@@ -116,26 +130,36 @@ p {
 .reset-button img {
   width: 80px;
   height: 80px;
-  margin: 0px 20px; /* Scaled x2 */
+  margin: 0px 20px;
+  /* Scaled x2 */
 }
 
 /* ====================================================================================================*/
 /* Players */
-#hiders, #seekers {
-  padding: 0px 40px 200px 40px; /* Scaled x2 */
-  min-height: 120px; /* Scaled x2 */
-  margin: 40px 0; /* Scaled x2 */
+#hiders,
+#seekers {
+  padding: 0px 40px 200px 40px;
+  /* Scaled x2 */
+  min-height: 120px;
+  /* Scaled x2 */
+  margin: 40px 0;
+  /* Scaled x2 */
 }
 
-#hiders ul, #seekers ul {
+#hiders ul,
+#seekers ul {
   padding: 0;
   margin: 0;
 }
 
-#hiders h2 img, #seekers h2 img {
-  width: 80px; /* Scaled x2 */
-  height: 80px; /* Scaled x2 */
-  margin-right: 40px; /* Scaled x2 */
+#hiders h2 img,
+#seekers h2 img {
+  width: 80px;
+  /* Scaled x2 */
+  height: 80px;
+  /* Scaled x2 */
+  margin-right: 40px;
+  /* Scaled x2 */
 }
 
 .player {
@@ -143,16 +167,20 @@ p {
   display: flex;
   justify-content: space-between;
   background-color: #eee;
-  margin: 20px 0; /* Scaled x2 */
+  margin: 20px 0;
+  /* Scaled x2 */
   color: white;
-  padding: 10px; /* Scaled x2 */
+  padding: 10px;
+  /* Scaled x2 */
   border-radius: 20px;
   text-transform: uppercase;
-  font-size: 400%; /* Scaled x2 */
+  font-size: 400%;
+  /* Scaled x2 */
   font-weight: bold;
 }
 
-.player-left, .player-right {
+.player-left,
+.player-right {
   display: flex;
   align-items: center;
 }
@@ -163,24 +191,31 @@ p {
 }
 
 .player-icon {
-  width: 80px; /* Scaled x2 */
-  height: 80px; /* Scaled x2 */
-  margin: 20px; /* Scaled x2 */
+  width: 80px;
+  /* Scaled x2 */
+  height: 80px;
+  /* Scaled x2 */
+  margin: 20px;
+  /* Scaled x2 */
 }
 
 .time {
   font-family: 'Jet Brains Mono', monospace;
-  font-size: 100%; /* Scaled x2 */
+  font-size: 100%;
+  /* Scaled x2 */
 }
 
 .add-time-button {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  width: 80px; /* Scaled x2 */
-  height: 80px; /* Scaled x2 */
+  width: 80px;
+  /* Scaled x2 */
+  height: 80px;
+  /* Scaled x2 */
   padding: 0;
-  margin: 20px; /* Scaled x2 */
+  margin: 20px;
+  /* Scaled x2 */
 }
 
 .add-time-button img {
@@ -193,29 +228,36 @@ p {
 #questions-content {
   display: flex;
   flex-direction: column;
-  padding: 0px 40px 200px 40px; /* Scaled x2 */
+  padding: 0px 40px 200px 40px;
+  /* Scaled x2 */
 }
 
 .question-category {
   display: flex;
   align-items: center;
-  margin: 40px 0; /* Scaled x2 */
+  margin: 40px 0;
+  /* Scaled x2 */
 }
 
 .question-category img {
-  width: 80px; /* Scaled x2 */
-  height: 80px; /* Scaled x2 */
-  margin-right: 40px; /* Scaled x2 */
+  width: 80px;
+  /* Scaled x2 */
+  height: 80px;
+  /* Scaled x2 */
+  margin-right: 40px;
+  /* Scaled x2 */
 }
 
 .question-cost {
-  display: none; /* Hide the question cost */
+  display: none;
+  /* Hide the question cost */
 }
 
 .questions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px; /* Scaled x2 */
+  gap: 20px;
+  /* Scaled x2 */
 }
 
 .question-block {
@@ -223,37 +265,46 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px; /* Scaled x2 */
+  padding: 10px;
+  /* Scaled x2 */
   border-radius: 20px;
   text-align: center;
   color: white;
-  font-size: 100%; /* Adjusted to match button text size */
+  font-size: 100%;
+  /* Adjusted to match button text size */
 }
 
 .question-block img {
-  width: 250px; /* Scaled x2 */
-  height: 250px; /* Scaled x2 */
+  width: 250px;
+  /* Scaled x2 */
+  height: 250px;
+  /* Scaled x2 */
   margin-bottom: 0;
 }
 
 /* ====================================================================================================*/
-/* Curses */
-#curses-content {
+/* Cards */
+#cards-content {
   display: flex;
   flex-direction: column;
-  padding: 40px 40px 200px 40px; /* Scaled x2 */
+  padding: 0px 40px 200px 40px;
+  /* Scaled x2 */
 }
 
-.curse-category {
+.card-category {
   display: flex;
   align-items: center;
-  margin: 40px 0; /* Scaled x2 */
+  margin: 40px 0;
+  /* Scaled x2 */
 }
 
-.curse-category img {
-  width: 80px; /* Scaled x2 */
-  height: 80px; /* Scaled x2 */
-  margin-right: 40px; /* Scaled x2 */
+.card-category img {
+  width: 80px;
+  /* Scaled x2 */
+  height: 80px;
+  /* Scaled x2 */
+  margin-right: 40px;
+  /* Scaled x2 */
 }
 
 .hand-section {
@@ -263,48 +314,56 @@ p {
 }
 
 .hand-section img {
-  width: 80px; /* Scaled x2 */
-  height: 80px; /* Scaled x2 */
-  margin-right: 40px; /* Scaled x2 */
+  width: 80px;
+  /* Scaled x2 */
+  height: 80px;
+  /* Scaled x2 */
+  margin-right: 40px;
+  /* Scaled x2 */
 }
 
-.draw-curses-button {
+.draw-cards-button {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  width: 80px; /* Scaled x2 */
-  height: 80px; /* Scaled x2 */
+  width: 80px;
+  /* Scaled x2 */
+  height: 80px;
+  /* Scaled x2 */
   padding: 0;
 }
 
-.draw-curses-button img {
+.draw-cards-button img {
   width: 100%;
   height: 100%;
 }
 
-.curses-grid {
+.cards-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px; /* Scaled x2 */
-  margin-top: 40px; /* Scaled x2 */
+  gap: 20px;
+  /* Scaled x2 */
 }
 
-.curse {
+.card {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  padding: 40px; /* Scaled x2 */
+  padding: 40px;
+  /* Scaled x2 */
   border-radius: 20px;
   text-align: center;
   color: white;
   background-color: #aaa;
-  font-size: 300%; /* Adjusted to match button text size */
+  font-size: 300%;
+  /* Adjusted to match button text size */
 }
 
-.curse-name {
+.card-name {
   font-weight: bold;
   color: black;
-  text-transform: uppercase; /* Make curse names uppercase */
+  text-transform: uppercase;
+  /* Make card names uppercase */
 }
 
 /* =====================================================================================================*/
@@ -323,12 +382,16 @@ p {
   transform: translate(-50%, -50%);
   z-index: 1000;
   background-color: white;
-  padding: 40px; /* Scaled x2 */
+  padding: 40px;
+  /* Scaled x2 */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border-radius: 40px; /* Scaled x2 */
+  border-radius: 40px;
+  /* Scaled x2 */
   align-items: center;
-  text-align: center; /* Ensure consistent alignment */
-  font-size: 150%; /* Unified font size for all pop-ups */
+  text-align: center;
+  /* Ensure consistent alignment */
+  font-size: 150%;
+  /* Unified font size for all pop-ups */
   width: 80%;
 }
 
@@ -339,19 +402,26 @@ p {
 }
 
 .popup-content p {
-  font-size: 200%; /* Unified paragraph size for all pop-ups */
+  font-size: 200%;
+  /* Unified paragraph size for all pop-ups */
   text-align: center;
-  margin: 20px 0; /* Consistent spacing */
+  margin: 20px 0;
+  /* Consistent spacing */
 }
 
 .popup-content input {
-  padding: 40px; /* Scaled x2 */
+  padding: 40px;
+  /* Scaled x2 */
   text-align: center;
-  margin: 20px 20px; /* Scaled x2 */
-  border: 8px solid black; /* Scaled x2 */
-  border-radius: 20px; /* Scaled x2 */
+  margin: 20px 20px;
+  /* Scaled x2 */
+  border: 8px solid black;
+  /* Scaled x2 */
+  border-radius: 20px;
+  /* Scaled x2 */
   font-family: 'Jet Brains Mono', monospace;
-  font-size: 250%; /* Scaled x2 */
+  font-size: 250%;
+  /* Scaled x2 */
 }
 
 .popup-content .button-container {
@@ -365,45 +435,60 @@ p {
   cursor: pointer;
   background-color: #aaa;
   border: none;
-  padding: 40px 80px; /* Scaled x2 */
-  margin: 0 20px; /* Scaled x2 */
-  border-radius: 20px; /* Scaled x2 */
+  padding: 40px 80px;
+  /* Scaled x2 */
+  margin: 0 20px;
+  /* Scaled x2 */
+  border-radius: 20px;
+  /* Scaled x2 */
   flex: 1;
   width: 200px;
   text-align: center;
   font-family: 'Rubik', sans-serif;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 300%; /* Scaled x2 */
+  font-size: 300%;
+  /* Scaled x2 */
 }
 
 .popup-content h2 {
   text-align: center;
   width: 100%;
-  font-size: 300%; /* Unified header size */
+  font-size: 300%;
+  /* Unified header size */
   font-weight: bold;
   text-transform: uppercase;
-  margin-bottom: 20px; /* Consistent spacing */
+  margin-bottom: 20px;
+  /* Consistent spacing */
 }
 
 .popup-content input {
-  font-size: 200%; /* Unified input font size */
+  font-size: 200%;
+  /* Unified input font size */
   font-family: 'Jet Brains Mono', monospace;
-  padding: 20px; /* Consistent padding */
+  padding: 20px;
+  /* Consistent padding */
   text-align: center;
-  margin: 20px 0; /* Consistent spacing */
-  border: 4px solid black; /* Unified border size */
-  border-radius: 10px; /* Unified border radius */
+  margin: 20px 0;
+  /* Consistent spacing */
+  border: 4px solid black;
+  /* Unified border size */
+  border-radius: 10px;
+  /* Unified border radius */
 }
 
 .popup-content button {
-  font-size: 200%; /* Unified button font size */
+  font-size: 200%;
+  /* Unified button font size */
   font-family: 'Rubik', sans-serif;
   font-weight: bold;
   text-transform: uppercase;
-  padding: 20px 40px; /* Consistent padding */
-  margin: 0 10px; /* Consistent spacing */
-  border-radius: 10px; /* Unified border radius */
+  padding: 20px 40px;
+  /* Consistent padding */
+  margin: 0 10px;
+  /* Consistent spacing */
+  border-radius: 10px;
+  /* Unified border radius */
   cursor: pointer;
 }
 
@@ -436,14 +521,16 @@ p {
 }
 
 #splash-screen img {
-  width: 800px; /* Scaled x2 */
+  width: 800px;
+  /* Scaled x2 */
   height: auto;
 }
 
 #splash-screen h1 {
-  margin-top: 40px; /* Scaled x2 */
-  font-size: 600%; /* Scaled x2 */
+  margin-top: 40px;
+  /* Scaled x2 */
+  font-size: 600%;
+  /* Scaled x2 */
   font-weight: bold;
   text-transform: uppercase;
 }
-

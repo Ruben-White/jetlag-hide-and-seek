@@ -20,3 +20,6 @@ Gemfile.lock
 # Ignore cache and logs
 */cache/*
 
+# Ignore virtual environments
+.venv/
+
