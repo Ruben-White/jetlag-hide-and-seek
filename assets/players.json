@@ -1,6 +1,5 @@
 [
     {"name": "Ruben", "icon": "players-player.svg", "color": "#28A3D9"},
-    {"name": "Kees", "icon": "players-player.svg", "color": "#8C4FB0"},
     {"name": "Bjorn", "icon": "players-player.svg", "color": "#1DA44D"},
     {"name": "Kelt", "icon": "players-player.svg", "color": "#FFBD41"},
     {"name": "Simon", "icon": "players-player.svg", "color": "#F5793B"},
