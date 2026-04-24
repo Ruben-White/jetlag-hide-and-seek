@@ -135,6 +135,21 @@
             "name": "Curse Of The Gambler's Feet",
             "description": "For the next [S20, M40, L60] minutes, seekers must roll a die before taking any steps. They may take only that number of steps before rolling again.",
             "cost": "Roll a die. If it's an even number this curse has no effect"
+        },
+        {
+            "name": "Curse of The Blindfold",
+            "description": "For the next [S5, M10, L15] minutes, one of the seeksers must be blindfolded at all times.",
+            "cost": ""
+        },
+        {
+            "name": "Curse of The Euroknaller",
+            "description": "The seekers must find and consume a Euroknaller at a fast food establishment before asking another question.",
+            "cost": "Seekers must be in Europe"
+        },
+        {
+            "name": "Curse of the Febo Snack Wall",
+            "description": "The seekers must find and consume a snack from a Febo vending machine before asking another question. If the seekers manage to create a empty diagonal line in the vending machine, remove [S10, M20, L30] minutes from the seekers' time.",
+            "cost": "Seekers must be in Amsterdam"
         }
     ]}
 ]
