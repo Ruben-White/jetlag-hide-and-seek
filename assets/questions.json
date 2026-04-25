@@ -4,7 +4,7 @@
         "icon": "question-matching.svg",
         "color": "#28A3D9",
         "cost": "Draw 2 cards and keep 1",
-        "double_cost": "Draw 6 cards and keep 2",
+        "double_cost": "Draw 2 cards and keep 1 (twice)",
         "questions": [
             {"name": "Matching Commercial Airport", "icon": "question-matching-airport.svg", "description": "Is your nearest commercial airport the same as mine?"},
             {"name": "Matching Transit Line", "icon": "question-matching-transit-line.svg", "description": "Is your nearest transit line the same as mine?"},
@@ -30,7 +30,7 @@
         "icon": "question-measuring.svg",
         "color": "#1DA44D",
         "cost": "Draw 2 cards and keep 1",
-        "double_cost": "Draw 6 cards and keep 2",
+        "double_cost": "Draw 2 cards and keep 1 (twice)",
         "questions": [
             {"name": "Measuring Commercial Airport", "icon": "question-measuring-airport.svg", "description": "Compared to me, are you closer to or further from a commercial airport?"},
             {"name": "Measuring Train Line", "icon": "question-measuring-train-line.svg", "description": "Compared to me, are you closer to or further from a train line?"},
@@ -57,7 +57,7 @@
         "icon": "question-radars.svg",
         "color": "#F5793B",
         "cost": "Draw 2 cards and keep 1",
-        "double_cost": "Draw 4 cards and keep 2",
+        "double_cost": "Draw 2 cards and keep 1 (twice)",
         "questions": [
             {"name": "Radar 500 m", "icon": "question-radars-500-m.svg", "description": "Are you within a 500 m radius of me?"},
             {"name": "Radar 1 km", "icon": "question-radars-1-km.svg", "description": "Are you within a 1 km radius of me?"},
@@ -71,7 +71,7 @@
         "icon": "question-thermometers.svg",
         "color": "#FFBD41",
         "cost": "Draw 2 cards and keep 1",
-        "double_cost": "Draw 4 cards and keep 2",
+        "double_cost": "Draw 2 cards and keep 1 (twice)",
         "questions": [
             {"name": "Thermometer 500 m", "icon": "question-thermometers-500-m.svg", "description": " I am going to travel (at least) 500 m. After that, am I closer to or further from you?"},
             {"name": "Thermometer 1 km", "icon": "question-thermometers-1-km.svg", "description": " I am going to travel (at least) 1 km. After that, am I closer to or further from you?"},
@@ -86,7 +86,7 @@
         "icon": "question-photos.svg",
         "color": "#EC3339",
         "cost": "Draw 1 card and keep 1",
-        "double_cost": "Draw 2 cards and keep 2",
+        "double_cost": "Draw 1 card and keep 1 (twice)",
         "questions": [
             {"name": "Photo Any Building Visible From Transit Station", "icon": "question-photos-building.svg", "description": "Send me a photo of any building visible from your transit station. Must stand directly outside a station entrance. If multiple, choose one. Must include roof and both sides, with the top of the building in the top 1/3 of the frame."},
             {"name": "Photo Widest Street", "icon": "question-photos-street.svg", "description": "Send me a photo of the widest street/path you can see. Must include both sides of the street/path."},
